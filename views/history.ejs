@@ -1,0 +1,22 @@
+
+<!DOCTYPE html>
+<html lang="<%= locale %>">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= __("User History") %></title>
+  </head>
+  <body>
+    <h1><%= __("User History") %></h1>
+    <ul>
+      <% allHistory.forEach(entry => { %>
+        <li>
+          <strong><%= __("User id") %>: <%= entry.user_id %></strong> <br />
+          <strong><%= __("Request Type") %></strong> - <%= entry.outcome %> - <%= entry.timestamp %>
+        </li>
+      <% }); %>
+    </ul>
+
+    <a href="/history?downloadPDF=true" target="_blank"><%= __("Download as PDF") %></a>
+  </body>
+</html>

@@ -1,0 +1,65 @@
+<style>
+  form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f8f8f8;
+  }
+
+  label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+  }
+
+  input[type="text"],
+  textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+  }
+
+  button {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background-color: #45a049;
+  }
+</style>
+
+<form method="POST" action="/admin/edit/<%= item._id %>">
+  <label for="enName">English Name:</label>
+  <input type="text" name="enName" value="<%= item.names.en %>" required />
+
+  <label for="esName">Spanish Name:</label>
+  <input type="text" name="esName" value="<%= item.names.es %>" required />
+
+  <label for="enDescription">English Description:</label>
+  <textarea name="enDescription" required><%= item.descriptions.en %></textarea>
+
+  <label for="esDescription">Spanish Description:</label>
+  <textarea name="esDescription" required><%= item.descriptions.es %></textarea>
+
+  <label for="pictures">Pictures (comma-separated URLs):</label>
+  <input
+    type="text"
+    name="pictures"
+    value="<%= item.pictures.join(', ') %>"
+    required
+  />
+
+  <button type="submit">Update Item</button>
+</form>

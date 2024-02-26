@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="<%= locale %>">
+  <head>
+    <title>Sneakers</title>
+    <style>
+       body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #ecf0f1; 
+        color: #2c3e50; 
+      }
+
+      h1 {
+        color: #3498db;/
+      }
+
+      form {
+        margin-top: 20px;
+      }
+
+      label {
+        margin-right: 10px;
+      }
+
+      select {
+        padding: 5px;
+      }
+
+      button {
+        padding: 10px;
+        margin-top: 10px;
+        background-color: #3498db; 
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #2980b9; 
+      }
+
+      .itemBlocks {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        margin-top: 20px;
+      }
+
+      .itemBlock {
+        flex: 0 0 calc(30% - 20px);
+        background-color: #fff;
+        border: 1px solid #bdc3c7; 
+        border-radius: 5px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .itemBlock h2 {
+        color: #3498db; 
+      }
+
+      .itemBlock p {
+        color: #34495e; 
+      }
+
+      .carousel {
+        display: flex;
+        overflow: hidden;
+        margin-top: 10px;
+      }
+
+      .carousel img.carouselImage {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        margin-right: 5px;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+      }
+
+      .carousel img.carouselImage:first-child {
+        opacity: 1;
+      }
+
+      @media screen and (max-width: 768px) {
+        .itemBlock {
+          flex: 0 0 calc(50% - 20px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+     
+      <form id="languageForm" method="GET" action="/sneakersApi">
+        <label for="lang"><%= __("Select Language") %>:</label>
+        <select name="lang" onchange="document.getElementById('languageForm').submit()">
+          <option value="en" <%= locale === 'en' ? 'selected' : '' %>>English</option>
+          <option value="es" <%= locale === 'es' ? 'selected' : '' %>>Español</option>
+        </select>
+      </form>
+
+      <h1><%= __("Clothes Api using NodeJS") %></h1>
+      <form action="/sneakersApi" method="get">
+        <input type="text" name="sneakers" placeholder="<%= __("Enter sneakers name") %>" />
+        <button type="submit" class="btn"><%= __("Get sneakers") %></button>
+      </form>
+
+      <div>
+        <h1><%= __("Sneakers List") %></h1>
+
+        <% if (error) { %>
+          <p class="error"><%= error %></p>
+        <% } else if (products && products.length > 0) { %>
+          <ul>
+            <% products.forEach(sneaker => { %>
+              <li>
+                <h2><%= sneaker.shoeName %></h2>
+                <p><%= __("Brand") %>: <%= sneaker.brand %></p>
+                <p><%= __("Silhouette") %>: <%= sneaker.silhoutte %></p>
+                <p><%= __("Style ID") %>: <%= sneaker.styleID %></p>
+                <p><%= __("Make") %>: <%= sneaker.make %></p>
+                <p><%= __("Colorway") %>: <%= sneaker.colorway %></p>
+                <p><%= __("Release Date") %>: <%= sneaker.releaseDate %></p>
+                <p><%= __("Description") %>: <%= sneaker.description %></p>
+
+                <img
+                  src="<%= sneaker.thumbnail %>"
+                  alt="<%= sneaker.shoeName %> <%= __("Thumbnail") %>"
+                />
+              </li>
+            <% }); %>
+          </ul>
+        <% } else { %>
+          <p class="error"><%= __("No sneaker data available.") %></p>
+        <% } %>
+      </div>
+    </div>
+  </body>
+</html>

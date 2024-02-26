@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="<%= locale %>">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= __("Home Page") %></title>
+    <style>
+      body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #ecf0f1; 
+        color: #2c3e50; 
+      }
+
+      h1 {
+        color: #3498db; 
+      }
+
+      form {
+        margin-top: 20px;
+      }
+
+      label {
+        margin-right: 10px;
+      }
+
+      select {
+        padding: 5px;
+      }
+
+      button {
+        padding: 10px;
+        margin-top: 10px;
+        background-color: #3498db; /* Dodger Blue */
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #2980b9; /* Darker Dodger Blue */
+      }
+
+      .itemBlocks {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        margin-top: 20px;
+      }
+
+      .itemBlock {
+        flex: 0 0 calc(30% - 20px);
+        background-color: #fff;
+        border: 1px solid #bdc3c7; /* Silver */
+        border-radius: 5px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .itemBlock h2 {
+        color: #3498db; /* Dodger Blue */
+      }
+
+      .itemBlock p {
+        color: #34495e; /* Wet Asphalt */
+      }
+
+      .carousel {
+        display: flex;
+        overflow: hidden;
+        margin-top: 10px;
+      }
+
+      .carousel img.carouselImage {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        margin-right: 5px;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+      }
+
+      .carousel img.carouselImage:first-child {
+        opacity: 1;
+      }
+
+      @media screen and (max-width: 768px) {
+        .itemBlock {
+          flex: 0 0 calc(50% - 20px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <form id="languageFormMain" method="GET" action="/user?lang">
+      <label for="lang"><%= __("selectLanguage") %>:</label>
+      <select name="lang" onchange="this.form.submit()">
+        <option value="en" <%= locale === 'en' ? 'selected' : '' %>>English</option>
+        <option value="es" <%= locale === 'es' ? 'selected' : '' %>>Español</option>
+      </select>
+    </form>
+    <h1><%= __("Main Page") %></h1>
+    <h1><%= __("Welcome,") %> <%= user.username %></h1>
+    <p><%= __("User ID") %>: <%= user.id %></p>
+    <p><%= __("Is Admin") %>: <%= user.isAdmin %></p>
+    <form method="GET" action="/sneakersApi">
+      <button type="submit"><%= __("Sneakers") %></button>
+    </form>
+
+    <form method="GET" action="/mockapi">
+      <button type="submit"><%= __("MockApi") %></button>
+    </form>
+
+    <form method="GET" action="/quiz">
+      <button type="submit"><%= __("bonuses") %></button>
+    </form>
+    <div class="itemBlocks">
+      <% items.forEach(item => { %>
+        <div class="itemBlock">
+          <h2><%= item.names.en %></h2>
+          <p><%= item.descriptions.en %></p>
+          <div class="carousel">
+            <% item.pictures.slice(0, 3).forEach((picture, index) => { %>
+              <img src="<%= picture %>" alt="<%= item.names.en %>" class="carouselImage" />
+            <% }); %>
+          </div>
+        </div>
+      <% }); %>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const carousel = document.querySelector(".carousel");
+        const images = carousel ? carousel.querySelectorAll(".carouselImage") : null;
+    
+        if (!carousel || !images || images.length === 0) {
+          console.error("Carousel elements not found!");
+          return;
+        }
+    
+        let currentIndex = 0;
+    
+        function showImage(index) {
+          images.forEach((image, i) => {
+            image.style.opacity = i === index ? "1" : "0";
+          });
+        }
+    
+        function nextImage() {
+          currentIndex = (currentIndex + 1) % images.length;
+          showImage(currentIndex);
+        }
+    
+        setInterval(nextImage, 3000);
+      });
+    </script>
+  </body>
+</html>

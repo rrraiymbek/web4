@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html lang="<%= locale %>">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= __("loginPage") %></title>
+    <style>
+      body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+        color: #333;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+
+      h1 {
+        color: #3498db;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+      }
+
+      label {
+        margin-bottom: 5px;
+      }
+
+      input {
+        padding: 10px;
+        margin-bottom: 10px;
+        width: 250px;
+        box-sizing: border-box;
+      }
+
+      button {
+        padding: 10px;
+        background-color: #3498db;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #2980b9;
+      }
+    </style>
+  </head>
+  <body>
+    <h1><%= __("loginPage") %></h1>
+
+ 
+    <form id="languageForm" method="GET" action="/login">
+      <label for="lang"><%= __("selectLanguage") %>:</label>
+      <select name="lang" onchange="this.form.submit()">
+        <option value="en" <%= locale === 'en' ? 'selected' : '' %>>English</option>
+        <option value="es" <%= locale === 'es' ? 'selected' : '' %>>Español</option>
+        </select>
+    </form>
+
+    <form method="POST" action="/login">
+      <label for="username"><%= __("username") %>:</label>
+      <input type="text" name="username" required />
+      <br />
+      <label for="password"><%= __("password") %>:</label>
+      <input type="password" name="password" required />
+      <br />
+      <button type="submit"><%= __("login") %></button>
+    </form>
+  </body>
+</html>

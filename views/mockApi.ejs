@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= __("Mock API Data") %></title>
+  </head>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+
+    #languageForm {
+      margin-bottom: 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+
+    h1 {
+      color: #3498db;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      margin-bottom: 20px;
+      padding: 10px;
+      background-color: #ecf0f1;
+      border-radius: 5px;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    .error {
+      color: #e74c3c;
+    }
+
+    select {
+      padding: 5px;
+    }</style>
+  <body>
+    <form id="languageForm" method="GET" action="/mockapi">
+      <label for="lang"><%= __("Select Language") %>:</label>
+      <select name="lang" onchange="this.form.submit()">
+        <option value="en" <%= locale === 'en' ? 'selected' : '' %>>English</option>
+        <option value="es" <%= locale === 'es' ? 'selected' : '' %>>Español</option>
+      
+      </select>
+    </form>
+
+    <div class="container">
+      <h1><%= __("Mock API Data") %></h1>
+
+      <% if (data && data.length > 0) { %>
+       
+        <ul>
+          <% data.forEach(user => { %>
+            <li>
+              <p><%= __("ID") %>: <%= user.id %></p>
+              <p><%= __("Email") %>: <%= user.email %></p>
+              <p><%= __("Address") %>: <%= user.address %></p>
+              <p><%= __("City") %>: <%= user.city %></p>
+              <p><%= __("Name") %>: <%= user.name %></p>
+              <p><%= __("Description") %>: <%= user.description %></p>
+              <p><%= __("Created At") %>: <%= user.createdAt %></p>
+            </li>
+          <% }); %>
+        </ul>
+      <% } else { %>
+        <p class="error"><%= __("No user data available.") %></p>
+      <% } %>
+    </div>
+  </body>
+</html>
